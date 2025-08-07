@@ -45,6 +45,7 @@ const styles = {
   container: {
     padding: "20px",
     paddingBottom: "80px",
+    backgroundColor: "#f5f5f5", // 배경색 추가
   },
   sectionTitle: {
     fontSize: "16px",

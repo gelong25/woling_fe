@@ -75,9 +75,9 @@ const styles = {
     container: {
       fontFamily: "sans-serif",
       padding: "16px",
-      backgroundColor: "#f9f9f9",
-      //minHeight: "100vh",
+      backgroundColor: "#f5f5f5",
       boxSizing: "border-box",
+      minHeight: "90vh", // ⬅️ 이 줄 추가!
     },
     header: {
       display: "flex",
@@ -181,7 +181,10 @@ const styles = {
       color: "#d32f2f",
     },
     footer: {
-      marginTop: "28px",
+      backgroundColor: "#fff",
+      borderRadius: "16px", // 더 둥글고 통통하게
+      padding: "18px 16px",
+      marginTop: "150px",
       textAlign: "center",
       fontSize: "12.5px",
       color: "#888",
