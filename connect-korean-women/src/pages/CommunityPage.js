@@ -1,13 +1,21 @@
+import React, { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import dummyPosts from "../data/dummyPosts";
-import PostCard from "../components/PostCard";
-
+import TodayTopicCard from "../components/TodayTopicCard";
+import HotPostCard from "../components/HotPostCard";
+import LatestPostCard from "../components/LatestPostCard";
+import { todayTopic, hotPosts, latestPosts } from "../data/dummyPosts";
+// 🔥 임시 데이터 (dummy)
 
 function CommunityPage() {
-    const navigate = useNavigate(); // ✅ 추가
+  const navigate = useNavigate();
+  const [activeCategory, setActiveCategory] = useState("전체");
+
+  const categories = ["전체", "오늘의 주제", "육아", "한국어", "문화", "자유"];
+
+
   return (
-    
     <div style={styles.container}>
+      {/* 상단 타이틀 + 글쓰기 버튼 */}
       <div style={styles.topBar}>
         <h2 style={styles.title}>커뮤니티</h2>
         <button
@@ -20,39 +28,81 @@ function CommunityPage() {
             }
           }}
         >
-          글쓰기
+          + 글쓰기
         </button>
-        </div>
+      </div>
+
+      {/* 탭 */}
       <div style={styles.tabRow}>
-      <NavLink to="/community" style={({ isActive }) => isActive ? styles.activeTab : styles.inactiveTab}>
-            일반 커뮤니티
+        <NavLink
+          to="/community"
+          style={({ isActive }) =>
+            isActive ? styles.activeTab : styles.inactiveTab
+          }
+        >
+          일반 커뮤니티
         </NavLink>
-        <NavLink to="/community/policy" style={({ isActive }) => isActive ? styles.activeTab : styles.inactiveTab}>
-            정책 & 소식
+        <NavLink
+          to="/community/policy"
+          style={({ isActive }) =>
+            isActive ? styles.activeTab : styles.inactiveTab
+          }
+        >
+          정책 & 소식
         </NavLink>
       </div>
-      <div style={{ marginTop: "20px" }}>
-        {dummyPosts.map((post) => (
-            <div
-            key={post.id}
-            onClick={() => navigate(`/community/${post.id}`)}
-            style={{ cursor: "pointer" }}
-            >
-            <PostCard post={post} />
-            </div>
+      {/* ✅ 카테고리 선택 버튼 */}
+      <div style={styles.categoryRow}>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            style={activeCategory === cat ? styles.activeCategory : styles.category}
+            onClick={() => setActiveCategory(cat)}
+          >
+            {cat}
+          </button>
         ))}
+      </div>
+
+      {/* 오늘의 주제 → '오늘의 주제' 선택 시에만 보이게 */}
+      {activeCategory === "오늘의 주제" && (
+        <div style={{ marginTop: "20px" }}>
+          <TodayTopicCard topic={todayTopic} />
         </div>
+      )}
+
+      {/* HOT 게시글 */}
+      <h3 style={styles.sectionTitle}>🔥 HOT 게시글</h3>
+      {hotPosts.map((post) => (
+        <div
+          key={post.id}
+          onClick={() => navigate(`/community/${post.id}`)}
+          style={{ cursor: "pointer" }}
+        >
+          <HotPostCard post={post} />
+        </div>
+      ))}
+
+      {/* 최신 게시글 */}
+      <h3 style={styles.sectionTitle}>🆕 최신 게시글</h3>
+      {latestPosts.map((post) => (
+        <div
+          key={post.id}
+          onClick={() => navigate(`/community/${post.id}`)}
+          style={{ cursor: "pointer" }}
+        >
+          <LatestPostCard post={post} />
+        </div>
+      ))}
     </div>
-    
   );
 }
 
 const styles = {
-    
   container: {
     padding: "20px",
-    paddingBottom: "80px", // 네비바 가리기 방지
-    backgroundColor: "#f5f5f5", // 배경색 추가
+    paddingBottom: "80px", // 네비바 가림 방지
+    backgroundColor: "#f5f5f5",
   },
   topBar: {
     display: "flex",
@@ -83,7 +133,6 @@ const styles = {
     backgroundColor: "#f8f8f8",
     borderRadius: "12px",
     fontWeight: "bold",
-    border: "none",
     textAlign: "center",
     textDecoration: "none",
     color: "#000",
@@ -93,10 +142,39 @@ const styles = {
     padding: "10px",
     backgroundColor: "#eee",
     borderRadius: "12px",
-    color: "#888",
-    border: "none",
     textAlign: "center",
     textDecoration: "none",
+    color: "#888",
+  },
+  sectionTitle: {
+    fontSize: "16px",
+    fontWeight: "bold",
+    margin: "20px 0 12px 0",
+  },
+  categoryRow: {
+    display: "flex",
+    gap: "8px",
+    marginTop: "16px",
+    overflowX: "auto", // 🔥 카테고리 많아지면 스크롤
+  },
+  category: {
+    padding: "6px 10px",
+    borderRadius: "20px",
+    backgroundColor: "#f1f1f1",
+    fontSize: "13px",
+    color: "#555",
+    border: "none",
+    cursor: "pointer",
+  },
+  activeCategory: {
+    padding: "6px 10px",
+    borderRadius: "20px",
+    background: "linear-gradient(90deg, #ef497a, #f77c9e)",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+    fontWeight: "bold",
+    fontSize: "13px",   // 🔥 여기도 동일
   },
 };
 

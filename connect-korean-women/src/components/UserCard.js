@@ -1,119 +1,84 @@
 import React from "react";
 
-function UserCard({ user }) {
-  return (
-    <div style={styles.card}>
-      <div style={styles.header}>
-        {/* 왼쪽 프로필 원 */}
-        <div style={styles.avatarWrap}>
-          <div style={styles.avatar}>{user.profileInitial}</div>
-          {user.isOnline && <span style={styles.onlineDot} />}
-        </div>
-
-        {/* 오른쪽 정보 */}
-        <div style={styles.info}>
-          <div style={styles.nameRow}>
-            <strong>{user.name}</strong>
-            <span style={styles.countryTag}>{user.country}</span>
-          </div>
-          <div style={styles.meta}>📅 {user.age}세</div>
-          <div style={styles.meta}>📍 {user.region}</div>
-
-          <div style={styles.langRow}>
-            {user.languages.map((lang) => (
-              <span key={lang} style={styles.lang}>
-                {lang}
-              </span>
-            ))}
-          </div>
-
-          <button style={styles.chatBtn}>💬 채팅 시작하기</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const styles = {
-  card: {
+const cardStyles = {
+  container: {
     backgroundColor: "#fff",
-    padding: "16px",
-    borderRadius: "16px",
-    marginBottom: "16px",
-    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-  },
-  header: {
+    borderRadius: "12px",
+    padding: "12px", // 🔥 패딩 줄임
+    textAlign: "center",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+    cursor: "pointer",
+    //width: "100%", 
+    height: "130px", // 🔥 높이 늘려서 정사각형 느낌
     display: "flex",
-    gap: "16px",
-    alignItems: "flex-start",
-  },
-  avatarWrap: {
-    position: "relative",
+    flexDirection: "column",
+    justifyContent: "center",
   },
   avatar: {
     width: "48px",
     height: "48px",
+    borderRadius: "50%",
     backgroundColor: "#f06292",
     color: "#fff",
-    borderRadius: "50%",
+    fontWeight: "bold",
+    fontSize: "14px", // 🔥 글자 줄임
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontWeight: "bold",
-    fontSize: "16px",
+    margin: "0 auto 8px",
+    position: "relative",
   },
   onlineDot: {
     position: "absolute",
-    bottom: "0",
-    right: "0",
+    bottom: "4px",
+    right: "4px",
     width: "10px",
     height: "10px",
-    backgroundColor: "green",
-    border: "2px solid white",
     borderRadius: "50%",
+    backgroundColor: "green",
+    border: "2px solid #fff",
   },
-  info: {
-    flex: 1,
+  name: {
+    fontWeight: "bold",
+    fontSize: "13px",
+    marginTop: "4px",
   },
-  nameRow: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    marginBottom: "4px",
+  engName: {
+    fontSize: "11px",
+    color: "#666",
+    marginBottom: "6px",
   },
-  countryTag: {
-    backgroundColor: "#eee",
-    borderRadius: "12px",
-    fontSize: "12px",
-    padding: "2px 8px",
-  },
-  meta: {
-    fontSize: "14px",
-    color: "#444",
+  teach: {
+    fontSize: "11px",
+    color: "#e91e63", // 빨간 강조
     marginBottom: "2px",
   },
-  langRow: {
-    display: "flex",
-    gap: "8px",
-    margin: "8px 0",
-  },
-  lang: {
-    padding: "4px 8px",
-    backgroundColor: "#f2f2f2",
-    borderRadius: "12px",
-    fontSize: "12px",
-  },
-  chatBtn: {
-    marginTop: "4px",
-    padding: "10px",
-    background: "linear-gradient(to right, #f06292, #e91e63)",
-    color: "#fff",
-    border: "none",
-    borderRadius: "12px",
-    fontWeight: "bold",
-    width: "100%",
-    cursor: "pointer",
+  learn: {
+    fontSize: "13px",
+    color: "#333",
   },
 };
+
+function UserCard({ user, onClick }) {
+  return (
+    <div style={cardStyles.container} onClick={onClick}>
+      {/* 동그라미 아바타 */}
+      <div style={cardStyles.avatar}>
+        {user.initial}
+        {user.online && <span style={cardStyles.onlineDot}></span>}
+      </div>
+
+      {/* 이름 */}
+      <div style={cardStyles.name}>
+        {user.flag} {user.name}
+      </div>
+      <div style={cardStyles.engName}>{user.engName}</div>
+
+      {/* 언어 */}
+      <div style={cardStyles.teach}>가르쳐줄: {user.teach}</div>
+      <div style={cardStyles.learn}>배울: {user.learn}</div>
+    </div>
+  );
+}
 
 export default UserCard;

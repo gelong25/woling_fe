@@ -13,16 +13,17 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PostDetailPage from "./pages/PostDetailPage";
 
-const isAuthenticated = () => {
+/*const isAuthenticated = () => {
   return !!localStorage.getItem("token"); // 간단한 인증 체크
-};
+};*/
 
 function App() {
   return (
     <Router>
       <div style={styles.outer}>
         <div style={styles.inner}>
-          <Header />
+        <Header />
+          <div style={styles.main}>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
@@ -34,6 +35,7 @@ function App() {
             <Route path="/chat/:userId" element={<ChatDetailPage />} />
             <Route path="/mypage" element={<MyPage />} />
           </Routes>
+          </div>
           <Navbar />
         </div>
       </div>
@@ -53,6 +55,15 @@ const styles = {
     minHeight: "100vh",
     backgroundColor: "#fff",
     position: "relative",
+    display: "flex",          // 🔥 추가
+    flexDirection: "column",  // 🔥 추가
+  },
+  main: {
+    flex: 1, // 남는 공간 다 차지
+    overflowY: "auto", // 🔥 이 부분만 스크롤됨
+    paddingTop: "60px",
+    paddingBottom: "80px", 
+    backgroundColor: "#f5f5f5",
   },
 };
 

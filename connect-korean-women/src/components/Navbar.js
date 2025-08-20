@@ -15,10 +15,12 @@ function Navbar() {
 
 const styles = {
   nav: {
-    position: "absolute", // ✅ fixed → absolute
+    position: "fixed",   // ✅ 뷰포트 기준으로 고정
     bottom: 0,
-    left: 0,
-    right: 0,
+    left: "50%",         // ✅ 화면 중앙에서 시작
+    transform: "translateX(-50%)",  // ✅ 정확히 가운데 정렬
+    width: "100%",
+    maxWidth: "420px",   // ✅ App.js inner랑 똑같이 제한
     height: "60px",
     backgroundColor: "#ffffff",
     borderTop: "1px solid #ddd",
